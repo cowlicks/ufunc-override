@@ -3,10 +3,9 @@ Usage:
 
 import ufunc_override as np
 
-define a class with __array_priority__ and __ufunc_override__
-
-ufunc_override should be a dict keyed with ufunc names, and valued with
-the callable functions you want to override them.
+define a class with __array_priority__ and __ufunc_override__.
+__ufunc_override__ should be a dict keyed with ufunc names, and valued
+with the callable functions you want to override them.
 """
 
 import numpy as np
@@ -28,8 +27,9 @@ class make_overridable(object):
                                key=lambda arg: arg.__array_priority__)
         if override_args:
             dominant_arg = override_args[-1]
+            remaining_args = [ arg for arg in args if arg is not dominant_arg]
             new_func = dominant_arg.__ufunc_override__.get(self.name.__name__)
-            return new_func(*args, **kwargs)
+            return new_func(dominant_arg, *remaining_args, **kwargs)
         else:
             return self.name(*args, **kwargs)
 
