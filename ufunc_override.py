@@ -6,6 +6,15 @@ import ufunc_override as np
 define a class with __array_priority__ and __ufunc_override__.
 __ufunc_override__ should be a dict keyed with ufunc names, and valued
 with the callable functions you want to override them.
+
+You can test this with a verison of scipy.sparse here:
+    https://github.com/cowlicks/scipy/tree/ufunc-override-scipy
+Build this then try it out with:
+
+import scipy.sparse as sp
+
+np.multiply(dense_matrix, sparse_matrix)
+
 """
 
 import numpy as np
